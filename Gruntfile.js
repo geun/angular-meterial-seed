@@ -84,19 +84,6 @@ module.exports = function (grunt) {
           dest: '<%= yeoman.app %>/scripts/config/'
         }]
       },
-      develop: {
-        options: {
-          patterns: [{
-            json: grunt.file.readJSON('config/environments/develop.json')
-          }]
-        },
-        files: [{
-          expand: true,
-          flatten: true,
-          src: ['./config/config.js'],
-          dest: '<%= yeoman.app %>/scripts/config/'
-        }]
-      },
       qa: {
         options: {
           patterns: [{
@@ -590,11 +577,6 @@ module.exports = function (grunt) {
     // Add further deploy related tasks here
   ]);
 
-  grunt.registerTask('develop', [
-    'clean:config',
-    'replace:develop'
-    // Add further deploy related tasks here
-  ]);
   grunt.registerTask('qa', [
     'clean:config',
     'replace:qa'

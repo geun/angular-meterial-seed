@@ -1,13 +1,4 @@
 {
   "foo": "bar",
-  "apiEndpoint": "http://api.devchattingcat.us/api/admin/",
-  "mixpanelIDConfig": "99ce14041a1ee453e0427369bc407055",
-  "accountEndpoint": "https://account.devchattingcat.com",
-  "pubnubPublishKey": "pub-c-da013200-c7a9-41e0-80c6-9095f7e6a3cd",
-  "pubnubSubscribeKey": "sub-c-3737762e-25cc-11e5-b869-0619f8945a4f",
-  "pubnubSecretKey": "sec-c-OTYzNzNhN2YtZWY2Mi00NjFiLTg5MDgtYjllYTQ4N2NhODQ0",
-  "notificationSocketType": "PUBNUB",
-  "socketHeartbeatInterval": 30,
-  "socketHeartbeatTimeout": 120
-
+  "apiEndpoint": "http://localhost:3000/api/admin/"
 }
