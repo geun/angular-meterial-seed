@@ -1,0 +1,18 @@
+<header>
+    <md-list>
+      <!-- dashboard -->
+      <md-subheader>Dashboard</md-subheader>
+      <md-list-item ng-repeat="item in dashboard" ng-click="navigate(item.state)">
+        <div class="md-list-item-text" md-ink-ripple layout="row" layout-align="start center">
+          <div class="inset">
+            <md-icon md-font-icon="{{item.icon}}" class="fa" alt="android"></md-icon>
+          </div>
+          <div class="inset">
+            {{item.title}}
+          </div>
+        </div>
+      </md-list-item>
+
+    </md-list>
+</header>
+

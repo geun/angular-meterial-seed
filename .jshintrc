@@ -9,8 +9,11 @@
   "node": true,
   "strict": true,
   "undef": true,
-  "unused": true,
+//  "unused": true,
+  "quotmark": "single",
+  "indent": 2,
   "globals": {
-    "angular": false
+    "angular": false,
+    "_": false
   }
 }

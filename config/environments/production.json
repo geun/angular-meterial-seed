@@ -1,0 +1,12 @@
+{
+  "foo": "bar",
+  "apiEndpoint": "https://api.chattingcat.com/api/admin/",
+  "accountEndpoint": "https://account.chattingcat.com",
+  "mixpanelIDConfig": "2aa9a620893f29a655be8a552920ae47",
+  "pubnubPublishKey": "pub-c-7815ef04-74d6-4f57-b493-80c38a9ba1c1",
+  "pubnubSubscribeKey": "sub-c-54a7f0f2-25b4-11e5-83e8-02ee2ddab7fe",
+  "pubnubSecretKey": "sec-c-MWVhMGY0M2ItZTg2Yy00ZWRkLWEyZjYtYmZiN2ViNjE1YjI3",
+  "notificationSocketType": "PUBNUB",
+  "socketHeartbeatInterval": 30,
+  "socketHeartbeatTimeout": 120
+}

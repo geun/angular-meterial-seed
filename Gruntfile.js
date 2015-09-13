@@ -7,6 +7,9 @@
 // use this if you want to recursively match all subfolders:
 // 'test/spec/**/*.js'
 
+var modRewrite = require('connect-modrewrite');
+var proxySnippet = require('grunt-connect-proxy/lib/utils').proxyRequest;
+
 module.exports = function (grunt) {
 
   // Time how long tasks take. Can help when optimizing build times
@@ -67,6 +70,76 @@ module.exports = function (grunt) {
       }
     },
 
+    replace: {
+      development: {
+        options: {
+          patterns: [{
+            json: grunt.file.readJSON('config/environments/development.json')
+          }]
+        },
+        files: [{
+          expand: true,
+          flatten: true,
+          src: ['./config/config.js'],
+          dest: '<%= yeoman.app %>/scripts/config/'
+        }]
+      },
+      develop: {
+        options: {
+          patterns: [{
+            json: grunt.file.readJSON('config/environments/develop.json')
+          }]
+        },
+        files: [{
+          expand: true,
+          flatten: true,
+          src: ['./config/config.js'],
+          dest: '<%= yeoman.app %>/scripts/config/'
+        }]
+      },
+      qa: {
+        options: {
+          patterns: [{
+            json: grunt.file.readJSON('config/environments/qa.json')
+          }]
+        },
+        files: [{
+          expand: true,
+          flatten: true,
+          src: ['./config/config.js'],
+          dest: '<%= yeoman.app %>/scripts/config/'
+        }]
+      },
+      staging: {
+        options: {
+          patterns: [{
+            json: grunt.file.readJSON('config/environments/staging.json')
+          }]
+        },
+        files: [{
+          expand: true,
+          flatten: true,
+          src: ['./config/config.js'],
+          dest: '<%= yeoman.app %>/scripts/config/'
+        }]
+      },
+      production: {
+        options: {
+          patterns: [{
+            json: grunt.file.readJSON('config/environments/production.json')
+          }]
+        },
+        files: [{
+          expand: true,
+          flatten: true,
+          src: ['./config/config.js'],
+          dest: '<%= yeoman.app %>/scripts/config/'
+        }]
+      }
+
+    },
+
+
     // The actual grunt server settings
     connect: {
       options: {
@@ -78,19 +151,32 @@ module.exports = function (grunt) {
       livereload: {
         options: {
           open: true,
-          middleware: function (connect) {
-            return [
-              connect.static('.tmp'),
-              connect().use(
+          base: [
+            '.tmp',
+            '<%= yeoman.app %>'
+          ],
+          middleware: function (connect, options) {
+            var middlewares = [];
+
+            middlewares.push(modRewrite([
+              '!/api|/assets|/images|/media|\\.mp3|\\.svg|\\.png|\\.jpg|\\.jpeg|\\.gif|\\.html|\\.js|\\.css|\\.ico|\\.eot|\\.woff|\\.ttf|\\.swf$ /index.html'
+            ]));
+
+            options.base.forEach(function (base) {
+              // Serve static files.
+              middlewares.push(connect().use(
                 '/bower_components',
                 connect.static('./bower_components')
-              ),
-              connect().use(
-                '/app/styles',
-                connect.static('./app/styles')
-              ),
-              connect.static(appConfig.app)
-            ];
+              ));
+              middlewares.push(
+                connect().use(
+                  '/app/styles',
+                  connect.static('./app/styles')
+                ));
+              middlewares.push(connect.static(base));
+            });
+            middlewares.push(proxySnippet);
+            return middlewares;
           }
         }
       },
@@ -150,7 +236,8 @@ module.exports = function (grunt) {
           ]
         }]
       },
-      server: '.tmp'
+      server: '.tmp',
+      config: '<%= yeoman.app %>/scripts/config/config.js'
     },
 
     // Add vendor prefixed styles
@@ -448,6 +535,8 @@ module.exports = function (grunt) {
     }
 
     grunt.task.run([
+      'clean:config',
+      'replace:development',
       'clean:server',
       'wiredep',
       'concurrent:server',
@@ -494,4 +583,28 @@ module.exports = function (grunt) {
     'test',
     'build'
   ]);
+
+  grunt.registerTask('staging', [
+    'clean:config',
+    'replace:staging'
+    // Add further deploy related tasks here
+  ]);
+
+  grunt.registerTask('develop', [
+    'clean:config',
+    'replace:develop'
+    // Add further deploy related tasks here
+  ]);
+  grunt.registerTask('qa', [
+    'clean:config',
+    'replace:qa'
+    // Add further deploy related tasks here
+  ]);
+
+  grunt.registerTask('production', [
+    'clean:config',
+    'replace:production'      // Add further deploy related tasks here
+  ]);
+
+
 };
